@@ -7,5 +7,5 @@ module.exports = function(app) {
     .get(badgerloop.read_all_data);
 
   app.route('/pod/:sensorId')
-    .get(badgerloop.read_a_task);
+    .get(badgerloop.read_sensor_data);
 };
