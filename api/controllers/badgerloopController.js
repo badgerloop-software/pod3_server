@@ -1,5 +1,5 @@
 'use strict';
-
+// TODO: Modify responses to display properly according to https://badgerloop.docs.apiary.io
 /**
  * API Response Model - read_all_data
  * {
@@ -11,12 +11,14 @@
  * }
  */
 exports.read_all_data = function(req, res) {
-  console.log(req);
-  if (req.query.test == 2) {
-    res.end;
-    res.status(404).end;
-  }
-  res.send({ pod: 'data' });
+  var sql = "SELECT * FROM badgerloop WHERE time > ...";
+  connection.query(sql, function (err, result) {
+      if (err) {
+        res.status(500).end;
+      };
+      res.status(200);
+      res.send({ "sensors": result, "time": new Date().getTime() })
+  });
 };
 
 /**
@@ -31,5 +33,12 @@ exports.read_all_data = function(req, res) {
  * }
  */
 exports.read_sensor_data = function(req, res) {
-  res.send({ sensor: req.query.test });
+  var sql = "SELECT * FROM badgerloop WHERE time > ...";
+  connection.query(sql, function (err, result) {
+      if (err) {
+        res.status(500).end;
+      };
+      res.status(200);
+      res.send({ "id": result, "time": new Date().getTime() })
+  });
 };
